@@ -1,52 +1,50 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { Col, Button, Row, Container, Table } from "react-bootstrap";
+import useTimer from "../Hooks/useTimer";
+
 const Timer = ({ name, timer, setTimer, updateData }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  function toggle() {
-    setIsActive(!isActive);
-  }
-
-  function reset() {
-    setTimer(0);
-    setIsActive(false);
-  }
-
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setTimer((timer) => timer + 1);
-      }, 1000);
-    } else if (!isActive && timer !== 0) {
-      clearInterval(interval);
-      updateData();
-    }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [isActive, timer]);
-
-  const secondsToHms = (d) => {
-    d = Number(d);
-    var h = Math.floor(d / 3600);
-    var m = Math.floor((d % 3600) / 60);
-    var s = Math.floor((d % 3600) % 60);
-
-    var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s + (s === 1 ? " second" : " seconds");
-    return hDisplay + mDisplay + sDisplay;
-  };
+  const { secondsToHms, toggle, isActive, reset } = useTimer({
+    timer,
+    setTimer,
+    updateData,
+  });
 
   return (
     <div>
-      <h6>{name}</h6>
-      <p>Time: {secondsToHms(timer)}</p>
-      <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
-      <button onClick={reset}>Reset</button>
+      <Table bordered>
+        <tbody>
+          <Row as="tr">
+            <Col className="" as="td" sm={2}>
+              <div
+                style={{ marginTop: "8px" }}
+                className="d-flex justify-content-center align-self-center"
+              >
+                <h5>{name}</h5>
+              </div>
+            </Col>
+            <Col className="" as="td">
+              <h6 style={{ margin: "8px" }} className="d-flex flex-row-reverse">
+                {secondsToHms(timer)}
+              </h6>
+            </Col>
+            <Col className="" as="td" xs lg="2">
+              <Container>
+                <Button variant="primary" onClick={toggle}>
+                  {isActive ? "Pause" : "Start"}
+                </Button>{" "}
+                <Button variant="danger" onClick={reset}>
+                  Reset
+                </Button>
+              </Container>
+            </Col>
+          </Row>
+        </tbody>
+      </Table>
     </div>
   );
 };
 
 export default Timer;
+/*
+<h6>{name}</h6>
+<p>Time: {secondsToHms(timer)}</p>
+*/

@@ -10,7 +10,7 @@ const SignUp = () => {
   const register = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5000/api/register",
+      "https://productivity-app-frich.herokuapp.com/api/register",
       { username: username, password: password },
       { "Content-Type": "application/json" }
     );

@@ -25,9 +25,12 @@ const DashBoard = () => {
   }, []);
 
   const getData = async () => {
-    const response = await axios.get("http://localhost:5000/api/userdata", {
-      headers: { "x-access-token": localStorage.getItem("token") },
-    });
+    const response = await axios.get(
+      "https://productivity-app-frich.herokuapp.com/api/userdata",
+      {
+        headers: { "x-access-token": localStorage.getItem("token") },
+      }
+    );
     setWork(response.data.work);
     setHobbies(response.data.hobbies);
     setStudy(response.data.study);
@@ -35,7 +38,7 @@ const DashBoard = () => {
 
   const updateData = async () => {
     const response = await axios.post(
-      "http://localhost:5000/api/userdata",
+      "https://productivity-app-frich.herokuapp.com/api/userdata",
       { study: study, hobbies: hobbies, work: work },
       {
         headers: {

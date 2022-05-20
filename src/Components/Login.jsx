@@ -10,7 +10,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5000/api/login",
+      "https://productivity-app-frich.herokuapp.com/api/login",
       { username: username, password: password },
       { "Content-Type": "application/json" }
     );
